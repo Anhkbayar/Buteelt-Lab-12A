@@ -5,14 +5,24 @@ import java.util.Arrays;
 public class GameState {
 
     private final Cell[] cells;
+    private final String currentPlayer;
+    private final String winner;
 
-    private GameState(Cell[] cells) {
+    private GameState(Cell[] cells, String currentPlayer, String winner) {
         this.cells = cells;
+        this.currentPlayer = currentPlayer;
+        this.winner = winner;
     }
 
     public static GameState forGame(Game game) {
         Cell[] cells = getCells(game);
-        return new GameState(cells);
+        String currentPlayer = game.getPlayer() == Player.PLAYER0 ? "X" : "O";
+        Player winner = game.getWinner();
+        return new GameState(
+                cells,
+                currentPlayer,
+                winner != null ? (winner == Player.PLAYER0 ? "X" : "O") : null
+        );
     }
 
     public Cell[] getCells() {
@@ -20,14 +30,22 @@ public class GameState {
     }
 
     /**
-     * toString() of GameState will return the string representing
-     * the GameState in JSON format.
+     * toString() of GameState will return the string representing the GameState
+     * in JSON format.
      */
     @Override
     public String toString() {
         return """
-                { "cells": %s}
-                """.formatted(Arrays.toString(this.cells));
+               {
+                   "cells": %s,
+                   "currentPlayer": "%s",
+                   "winner": %s
+               }
+               """.formatted(
+                Arrays.toString(this.cells),
+                this.currentPlayer,
+                this.winner != null ? "\"" + this.winner + "\"" : "null"
+        );
     }
 
     private static Cell[] getCells(Game game) {
@@ -38,11 +56,11 @@ public class GameState {
                 String text = "";
                 boolean playable = false;
                 Player player = board.getCell(x, y);
-                if (player == Player.PLAYER0)
-                    text = "X";
-                else if (player == Player.PLAYER1)
-                    text = "O";
-                else if (player == null) {
+                if (player == Player.PLAYER0) {
+                    text = "X"; 
+                }else if (player == Player.PLAYER1) {
+                    text = "O"; 
+                }else if (player == null) {
                     playable = true;
                 }
                 cells[3 * y + x] = new Cell(x, y, text, playable);
@@ -53,6 +71,7 @@ public class GameState {
 }
 
 class Cell {
+
     private final int x;
     private final int y;
     private final String text;

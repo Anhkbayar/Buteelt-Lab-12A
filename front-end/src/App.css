@@ -19,12 +19,13 @@
 }
 
 #instructions {
-  height: 5vh;
+  height: 10vh;
   background-color: white;
   padding: 0px;
   margin: 0px;
   text-align: center;
   border: 1px solid black;
+  font-size: 50px;
 }
 
 #bottombar button {
@@ -40,8 +41,10 @@
 html,
 body {
   height: 100%;
-  margin: 0;
+  width: 70%;
+  margin: auto;
   padding: 0;
+  background-color: yellowgreen;
 }
 
 .playable { background-color: red;}
