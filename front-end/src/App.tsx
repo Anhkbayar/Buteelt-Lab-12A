@@ -133,6 +133,20 @@ class App extends React.Component<Props, GameState> {
    * @returns the React element via JSX.
    * @see https://reactjs.org/docs/react-component.html
    */
+  renderInstructions(): React.ReactNode {
+    const { winner, currentPlayer } = this.state;
+    let message = '';
+    
+    if (winner) {
+      message = `Player ${winner} wins!`;
+    } else if (this.state.cells.some(c => c.playable)) {
+      message = `Player ${currentPlayer}'s turn`;
+    } else {
+      message = 'DRAW :(( one more?';
+    }
+    
+    return <div id="instructions">{message}</div>;
+  }
   render(): React.ReactNode {
     /**
      * We use JSX to define the template. An advantage of JSX is that you
@@ -141,17 +155,14 @@ class App extends React.Component<Props, GameState> {
      */
     return (
       <div id='main'>
-        <div id='instructions'>
-          {this.state.winner === null ? "Current player: "+this.state.currentPlayer : "Winner is "+ this.state.winner}
-
-        </div>
+        {this.renderInstructions()}
         <div id="board">
           {this.state.cells.map((cell, i) => this.createCell(cell, i))}
         </div>
         <div id="bottombar">
           <button onClick={/* get the function, not call the function */this.newGame}>New Game</button>
           {/* Exercise: implement Undo function */}
-          <button>Undo</button>
+          <button onClick={this.Undo} >Undo</button>
         </div>
       </div>
     );
