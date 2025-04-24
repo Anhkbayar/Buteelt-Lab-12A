@@ -16,6 +16,8 @@ public class GameState {
 
     public static GameState forGame(Game game) {
         Cell[] cells = getCells(game);
+        System.out.println("Current player enum value: " + game.getPlayer());
+        System.out.println("PLAYER0 value: " + Player.PLAYER0);
         String currentPlayer = game.getPlayer() == Player.PLAYER0 ? "X" : "O";
         Player winner = game.getWinner();
         return new GameState(
@@ -57,10 +59,10 @@ public class GameState {
                 boolean playable = false;
                 Player player = board.getCell(x, y);
                 if (player == Player.PLAYER0) {
-                    text = "X"; 
-                }else if (player == Player.PLAYER1) {
-                    text = "O"; 
-                }else if (player == null) {
+                    text = "X";
+                } else if (player == Player.PLAYER1) {
+                    text = "O";
+                } else if (player == null) {
                     playable = true;
                 }
                 cells[3 * y + x] = new Cell(x, y, text, playable);

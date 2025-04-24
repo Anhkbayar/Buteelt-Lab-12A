@@ -2,6 +2,7 @@ interface GameState {
   cells: Cell[];
   currentPlayer: String;
   winner: String | null;
+  history: GameState[];
 }
 
 interface Cell {

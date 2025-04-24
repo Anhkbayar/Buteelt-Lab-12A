@@ -37,7 +37,8 @@ class App extends React.Component<Props, GameState> {
     this.state = {
       cells: [],
       currentPlayer: 'X',
-      winner: null
+      winner: null,
+      history: []
     }
   }
 
@@ -52,8 +53,20 @@ class App extends React.Component<Props, GameState> {
     this.setState({
       cells: json['cells'],
       currentPlayer: json.currentPlayer,
-      winner: json.winner
+      winner: json.winner,
+      history: json['history']
     });
+  }
+
+  Undo = async() =>{
+    const response = await fetch('/undo');
+    const json = await response.json();
+    this.setState({
+      cells: json['cells'],
+      currentPlayer: json.currentPlayer,
+      winner: json.winner,
+      history: json['history']
+    })
   }
 
   /**
@@ -72,7 +85,8 @@ class App extends React.Component<Props, GameState> {
       this.setState({
         cells: json['cells'],
         currentPlayer: json.currentPlayer,
-        winner: json.winner
+        winner: json.winner,
+        history: json['history']
       });
     }
   }
@@ -128,7 +142,8 @@ class App extends React.Component<Props, GameState> {
     return (
       <div id='main'>
         <div id='instructions'>
-          {this.state.winner === null ? this.state.currentPlayer : this.state.winner}
+          {this.state.winner === null ? "Current player: "+this.state.currentPlayer : "Winner is "+ this.state.winner}
+
         </div>
         <div id="board">
           {this.state.cells.map((cell, i) => this.createCell(cell, i))}

@@ -40,6 +40,14 @@ public class Game {
         return this.player;
     }
 
+    public List<Game> getHistory(){
+        return this.history;
+    }
+
+    public boolean canUndo(){
+        return !this.history.isEmpty();
+    }
+
     public Game play(int x, int y) {
         if (this.board.getCell(x, y) != null)
             return this;
