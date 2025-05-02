@@ -16,8 +16,6 @@ public class GameState {
 
     public static GameState forGame(Game game) {
         Cell[] cells = getCells(game);
-        System.out.println("Current player enum value: " + game.getPlayer());
-        System.out.println("PLAYER0 value: " + Player.PLAYER0);
         String currentPlayer = game.getPlayer() == Player.PLAYER0 ? "X" : "O";
         Player winner = game.getWinner();
         return new GameState(

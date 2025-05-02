@@ -41,8 +41,8 @@ public class App extends NanoHTTPD {
             // e.g., /play?x=1&y=1
             this.game = this.game.play(Integer.parseInt(params.get("x")), Integer.parseInt(params.get("y")));
         }else if (uri.equals("/undo")) {
-            List<Game> history = this.game.getHistory();
-            if (!history.isEmpty()) {
+            if(this.game.getWinner() ==null && !this.game.getHistory().isEmpty()){
+                List<Game> history = this.game.getHistory();
                 this.game = history.get(history.size() - 1);
             }
         }
